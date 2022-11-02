@@ -1,0 +1,60 @@
+layouts:
+    - tall
+    - fullscreen
+    - wide
+
+mod1:
+    - option
+    - control
+    - command
+mod2:
+    - option
+    - shift
+    - control
+    - command
+
+relaunch-amethyst:
+    mod: mod2
+    key: r
+
+cycle-layout:
+    mod: mod1
+    key: space
+
+shrink-main:
+    mod: mod2
+    key: h
+
+expand-main:
+    mod: mod2
+    key: l
+
+increase-main:
+    mod: mod2
+    key: k
+
+decrease-main:
+    mod: mod2
+    key: j
+
+focus-cw:
+    mod: mod1
+    key: j
+
+focus-ccw:
+    mod: mod1
+    key: k
+
+swap-cw:
+    mod: mod1
+    key: l
+
+swap-ccw:
+    mod: mod1
+    key: h
+
+mouse-follows-focus: false
+
+focus-follows-mouse: false
+
+window-margins: false
