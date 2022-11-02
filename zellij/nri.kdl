@@ -1,0 +1,13 @@
+layout {
+    tab name="aide watch" cwd="/Users/dokkora/work/NoRedInk" {
+      pane cwd="monolith"
+      pane cwd="rostering"
+      pane cwd="contento"
+    }
+    tab name="redis" cwd="/Users/dokkora/work/NoRedInk" focus=true {
+      pane {
+        command "nix-shell"
+        args "--command" "redis-server _build/redis/data"
+      }
+    }
+}
