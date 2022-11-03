@@ -7,7 +7,7 @@
       user-mail-address "i.am@cel.so")
 (let ((font-size (if IS-MAC 15 17)))
   (setq doom-font (font-spec :family "Iosevka" :size font-size)))
-(setq doom-theme 'doom-nord-light)
+(setq doom-theme 'doom-tomorrow)
 (setq org-directory "~/org/")
 (setq display-line-numbers-type 'relative)
 (setq-default iden-tabs-mode nil)
