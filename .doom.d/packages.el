@@ -71,6 +71,8 @@
 
 (package! unison-mode)
 
+(package! apheleia)
+
 (package! io-mode :recipe
   (:host github
    :repo "IoLanguage/io"

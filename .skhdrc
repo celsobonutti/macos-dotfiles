@@ -12,7 +12,7 @@ cmd + alt + ctrl - tab : yabai -m display --focus recent
 cmd + alt + ctrl - f12 : yabai -m space --focus last
 cmd + alt + ctrl - q   : yabai -m window --close
 
-cmd + alt + ctrl - return : /Applications/kitty.app/Contents/MacOS/kitty --single-instance -d ~
+cmd + alt + ctrl - return : /Applications/Alacritty.app/Contents/MacOS/Alacritty
 
 cmd + alt + shift + ctrl - 1   : yabai -m window --space 1
 cmd + alt + shift + ctrl - 2   : yabai -m window --space 2

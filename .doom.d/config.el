@@ -1,5 +1,7 @@
 (require 'smartparens)
 (require 'request)
+(require 'rubocopfmt)
+(require 'apheleia)
 
 ;; General configs
 
@@ -7,12 +9,13 @@
       user-mail-address "i.am@cel.so")
 (let ((font-size (if IS-MAC 15 17)))
   (setq doom-font (font-spec :family "Iosevka" :size font-size)))
-(setq doom-theme 'doom-tomorrow-day)
+(setq doom-theme 'doom-nord-light)
 (setq org-directory "~/org/")
 (setq display-line-numbers-type 'relative)
 (setq-default iden-tabs-mode nil)
 (setq-default tab-width 2)
 (setq ident-line-function 'insert-tab)
+(apheleia-global-mode +1)
 (flycheck-popup-tip-mode nil)
 
 ;; General keybindings
@@ -29,7 +32,6 @@
  :nv "X" (kbd "\"_Vx")
  "C-l" #'pdf-scroll-down
  "C-h" #'pdf-scroll-up
- "C-f" #'format-all-buffer
  "C-d" #'lsp-restart-workspace
  "C-7" #'sp-wrap-square
  "C-8" #'sp-wrap-curly
@@ -58,6 +60,8 @@
   (sp-with-modes '(haskell-mode haskell-interactive-mode)
     (sp-local-pair "'" "'" :actions :rem)))
 
+
+
 ;; Elm mode configs
 
 (setq elm-mode-hook '(elm-indent-simple-mode))
@@ -65,9 +69,6 @@
 ;; Vue/Web mode configs
 
 (add-hook 'vue-mode-hook #'lsp!)
-(add-hook 'vue-mode +format-with nil)
-
-(add-hook 'web-mode +format-with nil)
 
 ;; ReScript mode configs
 
@@ -205,6 +206,37 @@
 
   (add-hook 'io-mode-hook #'display-line-numbers-mode))
 
+;; Formatters
+
+(add-to-list 'apheleia-formatters
+              '(fourmolu "fourmolu" "--stdin-input-file" (or (buffer-file-name) (buffer-name))))
+
+(add-to-list 'apheleia-formatters
+              '(ormolu "ormolu" "--stdin-input-file" (or (buffer-file-name) (buffer-name))))
+
+(add-to-list 'apheleia-formatters
+             '(rubocop "rubocop" "--autocorrect" "--format" "quiet" "--stdin" (or (buffer-file-name) (buffer-name)) "--stderr"))
+
+(add-to-list 'apheleia-formatters
+             '(rescript "rescript" "format" "-stdin" (or (buffer-file-name) (buffer-name))))
+
+
+(add-to-list 'apheleia-mode-alist
+              '(haskell-mode . fourmolu))
+
+(add-to-list 'apheleia-mode-alist
+             '(ruby-mode . rubocop))
+
+(add-to-list 'apheleia-mode-alist
+             '(rescript-mode . rescript))
+
+(add-hook 'before-save-hook #'+format/buffer nil t)
+
+;; Ruby mode
+
+(setq rubocop-autocorrect-on-save nil)
+
+(setq rubocop-format-on-save nil)
 
 ;; VTerm configurations
 
