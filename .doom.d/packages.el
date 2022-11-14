@@ -73,6 +73,10 @@
 
 (package! apheleia)
 
+(package! circadian)
+
+(package! flycheck-posframe)
+
 (package! io-mode :recipe
   (:host github
    :repo "IoLanguage/io"

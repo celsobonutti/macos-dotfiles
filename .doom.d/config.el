@@ -1,6 +1,5 @@
 (require 'smartparens)
 (require 'request)
-(require 'rubocopfmt)
 (require 'apheleia)
 
 ;; General configs
@@ -9,14 +8,21 @@
       user-mail-address "i.am@cel.so")
 (let ((font-size (if IS-MAC 15 17)))
   (setq doom-font (font-spec :family "Iosevka" :size font-size)))
-(setq doom-theme 'doom-nord-light)
 (setq org-directory "~/org/")
 (setq display-line-numbers-type 'relative)
 (setq-default iden-tabs-mode nil)
 (setq-default tab-width 2)
 (setq ident-line-function 'insert-tab)
 (apheleia-global-mode +1)
-(flycheck-popup-tip-mode nil)
+(use-package circadian
+  :ensure t
+  :config
+  (setq calendar-latitude -12.96)
+  (setq calendar-longitude -38.50)
+  (setq circadian-themes '((:sunrise . doom-nord-light)
+                           (:sunset  . doom-nord)))
+  (circadian-setup))
+
 
 ;; General keybindings
 
@@ -47,12 +53,14 @@
       :desc "Magit pull from upstream" :leader "g p" #'magit-pull-from-upstream
       :desc "Magit push to upstream" :leader "g P" #'magit-push-current-to-upstream)
 
-;; General LSP UI configs
+;; General LSP UI/Flycheck configs
 
-(add-hook! lsp-ui-sideline-mode
-           (setq lsp-ui-sideline-diagnostic-max-lines 20))
-(add-hook! lsp-ui-mode
-  (lsp-ui-doc-mode -1))
+(flycheck-posframe-configure-pretty-defaults)
+
+(setq
+ lsp-ui-sideline-enable nil
+ lsp-ui-doc-mode nil
+ flycheck-popup-tip-mode nil)
 
 ;; Haskell mode configs
 
@@ -102,14 +110,6 @@
 (setq rustic-lsp-server 'rust-analyzer)
 
 ;; Agda mode configs
-
-(after! (smartparens agda2-mode)
-  (sp-with-modes '(agda2-mode)
-    (sp-local-pair "{-" "-")
-    (sp-local-pair "{-#" "#-")
-    (sp-local-pair "{-@" "@-")
-    (sp-local-pair "`" nil :actions nil)
-    (sp-local-pair "'" nil :actions nil)))
 
 (after! lsp-mode
   (add-to-list 'lsp-language-id-configuration '(agda2-mode . "agda2"))
@@ -165,8 +165,7 @@
    (lambda
      (window)
      (eq 'racket-repl-mode
-         (buffer-local-value 'major-mode (window-buffer window))
-         ))
+         (buffer-local-value 'major-mode (window-buffer window))))
    (window-list)))
 
 
@@ -206,6 +205,13 @@
 
   (add-hook 'io-mode-hook #'display-line-numbers-mode))
 
+
+;; Ruby mode
+
+(setq rubocop-autocorrect-on-save nil)
+
+(setq rubocop-format-on-save nil)
+
 ;; Formatters
 
 (add-to-list 'apheleia-formatters
@@ -220,6 +226,8 @@
 (add-to-list 'apheleia-formatters
              '(rescript "rescript" "format" "-stdin" (or (buffer-file-name) (buffer-name))))
 
+(add-to-list 'apheleia-formatters
+             '(raco-fmt "raco" "fmt" (or (buffer-file-name) (buffer-name))))
 
 (add-to-list 'apheleia-mode-alist
               '(haskell-mode . fourmolu))
@@ -230,13 +238,10 @@
 (add-to-list 'apheleia-mode-alist
              '(rescript-mode . rescript))
 
+(add-to-list 'apheleia-mode-alist
+             '(racket-mode . raco-fmt))
+
 (add-hook 'before-save-hook #'+format/buffer nil t)
-
-;; Ruby mode
-
-(setq rubocop-autocorrect-on-save nil)
-
-(setq rubocop-format-on-save nil)
 
 ;; VTerm configurations
 
@@ -259,8 +264,8 @@
    (lambda
      (window)
      (eq 'pdf-view-mode
-         (buffer-local-value 'major-mode (window-buffer window))
-         ))
+         (buffer-local-value 'major-mode (window-buffer window))))
+         
    (window-list)))
 
 (defun pdf-scroll-down ()

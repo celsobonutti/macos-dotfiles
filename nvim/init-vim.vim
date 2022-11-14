@@ -113,5 +113,3 @@ call plug#begin('~/.vim/plugged')
 
   Plug 'direnv/direnv.vim'
 call plug#end()
-
-colorscheme dracula
