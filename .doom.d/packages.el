@@ -75,7 +75,13 @@
 
 (package! circadian)
 
-(package! flycheck-posframe)
+(package! copilot
+  :recipe (:host github :repo "zerolfx/copilot.el" :files ("*.el" "dist")))
+
+(package! flycheck-posframe
+  :recipe (:host github :repo "celsobonutti/flycheck-posframe" :files ("*.el")))
+
+(package! posframe)
 
 (package! io-mode :recipe
   (:host github
@@ -84,4 +90,5 @@
 
 (package! lean4-mode :recipe
   (:host github
-   :repo "leanprover/lean4-mode"))
+   :repo "leanprover/lean4-mode"
+   :files ("*.el" "data" "data/*.json")))

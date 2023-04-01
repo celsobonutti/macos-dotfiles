@@ -1,6 +1,7 @@
 (require 'smartparens)
 (require 'request)
 (require 'apheleia)
+(require 'flycheck-posframe)
 
 ;; General configs
 
@@ -22,6 +23,36 @@
   (setq circadian-themes '((:sunrise . doom-nord-light)
                            (:sunset  . doom-nord)))
   (circadian-setup))
+
+;; Copilot
+
+(setq copilot-node-executable "/Users/dokkora/Library/Caches/fnm_multishells/46084_1668533188118/bin/node")
+
+(use-package! copilot
+  :hook (prog-mode . copilot-mode)
+  :bind (("C-TAB" . 'copilot-accept-completion-by-word)
+         ("C-<tab>" . 'copilot-accept-completion-by-word)
+         :map copilot-completion-map
+         ("<tab>" . 'copilot-accept-completion)
+         ("TAB" . 'copilot-accept-completion)))
+
+;; Company
+
+(setq company-tooltip-flip-when-above t)
+
+;; General LSP UI/Flycheck configs
+
+(flycheck-posframe-configure-pretty-defaults)
+
+(setq
+ lsp-ui-sideline-enable nil
+ lsp-ui-doc-mode nil
+ flycheck-navigation-minimum-level 'error
+ flycheck-popup-tip-mode nil
+ flycheck-highlighting-mode 'lines
+ flycheck-posframe-position 'point-bottom-left-corner
+ flycheck-posframe-max-width 80
+ flycheck-posframe-max-height 25)
 
 
 ;; General keybindings
@@ -52,15 +83,6 @@
 (map! :map magit-mode-map
       :desc "Magit pull from upstream" :leader "g p" #'magit-pull-from-upstream
       :desc "Magit push to upstream" :leader "g P" #'magit-push-current-to-upstream)
-
-;; General LSP UI/Flycheck configs
-
-(flycheck-posframe-configure-pretty-defaults)
-
-(setq
- lsp-ui-sideline-enable nil
- lsp-ui-doc-mode nil
- flycheck-popup-tip-mode nil)
 
 ;; Haskell mode configs
 
@@ -176,8 +198,8 @@
     (go-to-racket-repl)
     (goto-char (point-max))))
 
-(add-hook 'racket-mode-hook #'racket-unicode-input-method-enable)
-(add-hook 'racket-repl-mode-hook #'racket-unicode-input-method-enable)
+;; (add-hook 'racket-mode-hook #'racket-unicode-input-method-enable)
+;; (add-hook 'racket-repl-mode-hook #'racket-unicode-input-method-enable)
 
 ;; Idris2 mode
 
@@ -196,6 +218,12 @@
   (setq lsp-semantic-tokens-enable t)
 
   (add-hook 'idris2-mode-hook #'lsp!))
+
+;; Lean4 mode
+
+(use-package! lean4-mode
+  :mode ("\\.lean\\'" . lean4-mode))
+
 
 ;; Io mode
 

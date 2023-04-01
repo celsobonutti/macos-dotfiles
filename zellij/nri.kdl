@@ -1,13 +1,21 @@
 layout {
-    tab name="aide watch" cwd="/Users/dokkora/work/NoRedInk" {
-      pane cwd="monolith"
-      pane cwd="rostering"
-      pane cwd="contento"
+    default_tab_template {
+        pane size=1 borderless=true {
+            plugin location="zellij:tab-bar"
+        }
+        children
+        pane size=2 borderless=true {
+            plugin location="zellij:status-bar"
+        }
     }
-    tab name="redis" cwd="/Users/dokkora/work/NoRedInk" focus=true {
-      pane {
-        command "nix-shell"
-        args "--command" "redis-server _build/redis/data"
+    tab name="aide watch" cwd="/Users/dokkora/work/NoRedInk" focus=true {
+      pane split_direction="vertical" {
+          pane cwd="monolith"
+          pane cwd="monolith"
+      }
+      pane split_direction="vertical" {
+          pane cwd="rostering"
+          pane cwd="contento"
       }
     }
 }

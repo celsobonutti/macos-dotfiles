@@ -5,7 +5,8 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages '(fish-mode flycheck-pos-tip request))
  '(safe-local-variable-values
-   '((eval add-to-list 'apheleia-mode-alist
+   '((lsp-elm-elm-path . lamdera)
+     (eval add-to-list 'apheleia-mode-alist
       '(haskell-mode . ormolu))
      (+format-with . fourmolu)
      (format-all-formatters "Haskell" fourmolu)

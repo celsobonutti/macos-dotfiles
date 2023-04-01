@@ -10,6 +10,7 @@ cmd + alt + ctrl - 9   : yabai -m space --focus 9
 cmd + alt + ctrl - 0   : yabai -m space --focus 10
 cmd + alt + ctrl - tab : yabai -m display --focus recent
 cmd + alt + ctrl - f12 : yabai -m space --focus last
+cmd + alt + ctrl - 0x1B : yabai -m space --focus last
 cmd + alt + ctrl - q   : yabai -m window --close
 
 cmd + alt + ctrl - return : /Applications/Alacritty.app/Contents/MacOS/Alacritty
@@ -25,3 +26,18 @@ cmd + alt + shift + ctrl - 8   : yabai -m window --space 8
 cmd + alt + shift + ctrl - 9   : yabai -m window --space 9
 cmd + alt + shift + ctrl - 0   : yabai -m window --space 10
 cmd + alt + shift + ctrl - tab : yabai -m window --display recent
+
+# focus window
+# here the || was added so the selection cycles and doesn't stop at the end or beginning
+cmd + alt + ctrl - k : yabai -m window --focus prev || yabai -m window --focus last
+cmd + alt + ctrl - j : yabai -m window --focus next || yabai -m window --focus first
+cmd + alt + ctrl - l : yabai -m window --swap next || yabai -m window --swap first
+cmd + alt + ctrl - h : yabai -m window --swap prev || yabai -m window --swap last
+cmd + alt + ctrl - m : yabai -m window --swap west
+
+cmd + alt + shift + ctrl - h : yabai -m window --warp west
+cmd + alt + shift + ctrl - l : yabai -m window --warp east
+
+cmd + alt + ctrl - r : yabai -m window --toggle split
+
+cmd + alt + ctrl - space : yabai -m window --toggle zoom-fullscreen
